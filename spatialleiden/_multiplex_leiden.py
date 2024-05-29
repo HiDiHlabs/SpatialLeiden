@@ -1,3 +1,4 @@
+from collections.abc import Collection
 from typing import TypeAlias
 
 import leidenalg as la
@@ -26,16 +27,13 @@ def _build_igraph(adjacency: _GraphArray, *, directed: bool = True) -> Graph:
 
 
 def multiplex_leiden(
-    latent_neighbors: _GraphArray,
-    spatial_neighbors: _GraphArray,
-    *,
-    directed: tuple[bool, bool] = (True, True),
-    use_weights: bool = True,
+    *neighbors: _GraphArray,
+    directed: bool | Collection[bool] = True,
+    use_weights: bool | Collection[bool] = True,
     n_iterations: int = -1,
     partition_type=la.RBConfigurationVertexPartition,
-    layer_ratio: float = 1,
-    latent_partition_kwargs: dict | None = None,
-    spatial_partition_kwargs: dict | None = None,
+    layer_weights: float | Collection[float] = 1,
+    partition_kwargs: dict | None | Collection[dict | None] = None,
     seed: int = 42,
 ) -> NDArray[np.integer]:
     """
@@ -43,30 +41,22 @@ def multiplex_leiden(
 
     Parameters
     ----------
-    latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
-        Matrix of row-wise neighbor definitions in the latent space
+    neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrices of row-wise neighbor definitions for the different layers
         i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
-    spatial_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
-        Matrix of row-wise neighbor definitions in the topological space
-        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
-    directed : tuple[bool, bool], optional
-        Whether to use a directed graph for latent and topological neighbors,
-        respectively.
-    use_weights : bool, optional
-        Whether to use weights for the edges.
+    directed : bool | collections.abc.Collection[bool], optional
+        Whether to use a directed graph for each layer, respectively.
+    use_weights : bool | collections.abc.Collection[bool], optional
+        Whether to use weights for the edges of each layer, respectively.
     n_iterations : int, optional
         Number of iterations to run the Leiden algorithm. If the number is negative it
         is run until convergence.
     partition_type : optional
         A :py:class:`leidenalg.VertexPartition.MutableVertexPartition` to be used.
-    layer_ratio : tuple[int, int], optional
-        The ratio of the weighting of the layers in latent and topological space.
-        A higher ratio will increase relevance of the topological neighbors and lead to
-        more spatially homogeneous clusters.
-    latent_partition_kwargs : dict | None, optional
+    layer_weights : float | collections.abc.Collection[float], optional
+        The weights of each layer, respectively.
+    partition_kwargs : dict | None | collections.abc.Collection[dict | None], optional
         Keyword arguments for the latent space partition.
-    spatial_partition_kwargs : dict | None, optional
-        Keyword arguments for the topological space partition.
     seed : int, optional
         Randoem seed.
 
@@ -76,32 +66,47 @@ def multiplex_leiden(
         Cluster assignment.
     """
 
-    adjacency_latent = _build_igraph(latent_neighbors, directed=directed[0])
-    adjacency_spatial = _build_igraph(spatial_neighbors, directed=directed[1])
+    def check_length(x, type, n) -> Collection | list:
+        if isinstance(x, type):
+            x = [x] * n
+        elif len(x) != n:
+            raise ValueError("")
+        return x
+
+    n_layers = len(neighbors)
+
+    directed = check_length(directed, bool, n_layers)
+    use_weights = check_length(use_weights, bool, n_layers)
+    layer_weights = check_length(layer_weights, float, n_layers)
+    partition_kwargs = check_length(partition_kwargs, (dict, None), n_layers)
+
+    layers = [
+        _build_igraph(n, directed=d) for n, d in zip(neighbors, directed, strict=True)
+    ]
 
     # parameterise the partitions
-    if spatial_partition_kwargs is None:
-        spatial_partition_kwargs = dict()
-    if latent_partition_kwargs is None:
-        latent_partition_kwargs = dict()
+    partition_kwargs_ls = list()
+    for p_kwargs, with_weight in zip(partition_kwargs, use_weights, strict=True):
+        p_kwargs = p_kwargs if p_kwargs is not None else dict()
+        if with_weight:
+            p_kwargs["weights"] = "weight"
+        partition_kwargs_ls.append(p_kwargs)
 
-    if use_weights:
-        spatial_partition_kwargs["weights"] = "weight"
-        latent_partition_kwargs["weights"] = "weight"
-
-    latent_part = partition_type(adjacency_latent, **latent_partition_kwargs)
-    spatial_part = partition_type(adjacency_spatial, **spatial_partition_kwargs)
+    partitions = [
+        partition_type(layer, **kwargs)
+        for layer, kwargs in zip(layers, partition_kwargs_ls, strict=True)
+    ]
 
     optimiser = la.Optimiser()
     optimiser.set_rng_seed(seed)
 
     _ = optimiser.optimise_partition_multiplex(
-        [latent_part, spatial_part],
-        layer_weights=[1, 1 * layer_ratio],
+        partitions,
+        layer_weights=list(layer_weights),
         n_iterations=n_iterations,
     )
 
-    return np.array(latent_part.membership)
+    return np.array(partitions[0].membership)
 
 
 def spatialleiden(
@@ -125,14 +130,15 @@ def spatialleiden(
     """
     Perform SpatialLeiden clustering.
 
-    This is a wrapper around :py:func:`spatialleiden.multiplex_leiden` that can directly
-    use :py:class:`anndata.AnnData` as input and to save results.
+    This is a wrapper around :py:func:`spatialleiden.multiplex_leiden` that uses
+    :py:class:`anndata.AnnData` as input and works with one layer for the latent space
+    and one for the topological space.
 
     Parameters
     ----------
     adata : anndata.AnnData
     resolution : tuple[int, int], optional
-        resolution for the latent space and topological space layer, respectively.
+        Resolution for the latent space and topological space layer, respectively.
     latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrix of row-wise neighbor definitions in the latent space
         i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
@@ -151,7 +157,7 @@ def spatialleiden(
         runs until convergence.
     partition_type : optional
         A :py:class:`leidenalg.VertexPartition.MutableVertexPartition` to be used.
-    layer_ratio : tuple[int, int], optional
+    layer_ratio : float, optional
         The ratio of the weighting of the layers in latent and topological space.
         A higher ratio will increase relevance of the topological neighbors and lead to
         more spatially homogeneous clusters.
@@ -190,9 +196,8 @@ def spatialleiden(
         use_weights=use_weights,
         n_iterations=n_iterations,
         partition_type=partition_type,
-        layer_ratio=layer_ratio,
-        spatial_partition_kwargs=spatial_partition_kwargs,
-        latent_partition_kwargs=latent_partition_kwargs,
+        layer_weights=[1, layer_ratio],
+        partition_kwargs=[latent_partition_kwargs, spatial_partition_kwargs],
         seed=seed,
     )
 
