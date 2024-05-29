@@ -93,7 +93,11 @@ def search_resolution_spatial(
     **kwargs,
 ) -> float:
     """
-    Search the resolution to obtain `n` clusters using Multiplex Leiden clustering.
+    Search the resolution of the spatial layer to obtain `n` clusters using
+    SpatialLeiden clustering.
+
+    The resolution of the latent space must be provided using ``kwargs``. If you want
+    to search both resolutions refer to :py:func:`spatialleiden.search_resolution`.
 
     Parameters
     ----------
@@ -144,7 +148,8 @@ def search_resolution(
     spatial_kwargs: dict | None = None,
 ) -> tuple[float, float]:
     """
-    Search the resolution to obtain `n` clusters using Multiplex Leiden clustering.
+    Search the resolutions of the topological and latent layer to obtain `n` clusters
+    using SpatialLeiden clustering.
 
     Parameters
     ----------

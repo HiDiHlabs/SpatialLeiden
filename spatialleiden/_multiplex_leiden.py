@@ -40,6 +40,9 @@ def multiplex_leiden(
     """
     Partition the nodes using multiplex leiden clustering.
 
+    For more information on multiplex leiden clustering read the
+    `leidenalg documentation <https://leidenalg.readthedocs.io/en/stable/multiplex.html>`_.
+
     Parameters
     ----------
     neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
@@ -57,9 +60,9 @@ def multiplex_leiden(
     layer_weights : float | collections.abc.Collection[float], optional
         The weights of each layer, respectively.
     partition_kwargs : dict | None | collections.abc.Collection[dict | None], optional
-        Keyword arguments for the latent space partition.
+        Keyword arguments for the partition of each layer.
     seed : int, optional
-        Randoem seed.
+        Random seed.
 
     Returns
     -------
