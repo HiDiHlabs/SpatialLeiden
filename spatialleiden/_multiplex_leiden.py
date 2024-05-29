@@ -1,4 +1,5 @@
 from collections.abc import Collection
+from types import NoneType
 from typing import TypeAlias
 
 import leidenalg as la
@@ -78,7 +79,7 @@ def multiplex_leiden(
     directed = check_length(directed, bool, n_layers)
     use_weights = check_length(use_weights, bool, n_layers)
     layer_weights = check_length(layer_weights, float, n_layers)
-    partition_kwargs = check_length(partition_kwargs, (dict, None), n_layers)
+    partition_kwargs = check_length(partition_kwargs, (dict, NoneType), n_layers)
 
     layers = [
         _build_igraph(n, directed=d) for n, d in zip(neighbors, directed, strict=True)
@@ -112,12 +113,12 @@ def multiplex_leiden(
 def spatialleiden(
     adata: AnnData,
     *,
-    resolution: tuple[int, int] = (1, 1),
+    resolution: tuple[float, float] = (1, 1),
     latent_neighbors: _GraphArray | None = None,
     spatial_neighbors: _GraphArray | None = None,
     key_added: str = "spatialleiden",
     directed: tuple[bool, bool] = (True, True),
-    use_weights: bool = True,
+    use_weights: tuple[bool, bool] = (True, True),
     n_iterations: int = -1,
     partition_type=la.RBConfigurationVertexPartition,
     layer_ratio: float = 1,
@@ -137,7 +138,7 @@ def spatialleiden(
     Parameters
     ----------
     adata : anndata.AnnData
-    resolution : tuple[int, int], optional
+    resolution : tuple[float, float], optional
         Resolution for the latent space and topological space layer, respectively.
     latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrix of row-wise neighbor definitions in the latent space
@@ -150,8 +151,9 @@ def spatialleiden(
     directed : tuple[bool, bool], optional
         Whether to use a directed graph for latent and topological neighbors,
         respectively.
-    use_weights : bool, optional
-        Whether to use weights for the edges.
+    use_weights : tuple[bool, bool], optional
+        Whether to use weights for the edges for latent and topological neighbors,
+        respectively.
     n_iterations : int, optional
         Number of iterations to run the Leiden algorithm. If the number is negative it
         runs until convergence.
@@ -185,9 +187,8 @@ def spatialleiden(
     if spatial_partition_kwargs is None:
         spatial_partition_kwargs = dict()
 
-    spatial_partition_kwargs["resolution"], latent_partition_kwargs["resolution"] = (
-        resolution
-    )
+    latent_partition_kwargs["resolution_parameter"] = resolution[0]
+    spatial_partition_kwargs["resolution_parameter"] = resolution[1]
 
     cluster = multiplex_leiden(
         latent_distances,

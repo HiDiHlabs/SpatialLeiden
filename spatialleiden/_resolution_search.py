@@ -117,17 +117,16 @@ def search_resolution_spatial(
     """
 
     def ncluster4res_spatialleiden(resolution: float) -> int:
-        spatial_partition_kwargs["resolution_parameter"] = resolution
         spatialleiden(
             adata,
-            spatial_partition_kwargs=spatial_partition_kwargs,
+            resolution=(resolution_user[0], resolution),
             key_added=key_added,
             **kwargs,
         )
         return adata.obs[key_added].cat.categories.size
 
     key_added = kwargs.pop("key_added", "spatialleiden")
-    spatial_partition_kwargs = kwargs.pop("spatial_partition_kwargs", dict())
+    resolution_user = kwargs.pop("resolution", (1, 1))
 
     return _search_resolution(
         ncluster4res_spatialleiden, ncluster, start, step, n_iterations
@@ -180,6 +179,8 @@ def search_resolution(
         n_iterations=n_iterations,
         **latent_kwargs,
     )
+
+    spatial_kwargs["resolution"] = (resolution_latent, 1)
     resolution_spatial = search_resolution_spatial(
         adata,
         ncluster,
