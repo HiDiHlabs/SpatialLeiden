@@ -25,7 +25,7 @@ def _build_igraph(adjacency: _GraphArray, *, directed: bool = True) -> Graph:
     return g
 
 
-def leiden_multiplex(
+def multiplex_leiden(
     latent_neighbors: _GraphArray,
     spatial_neighbors: _GraphArray,
     *,
@@ -33,11 +33,48 @@ def leiden_multiplex(
     use_weights: bool = True,
     n_iterations: int = -1,
     partition_type=la.RBConfigurationVertexPartition,
-    layer_weights: tuple[int, int] = (1, 1),
+    layer_ratio: float = 1,
     latent_partition_kwargs: dict | None = None,
     spatial_partition_kwargs: dict | None = None,
     seed: int = 42,
 ) -> NDArray[np.integer]:
+    """
+    Partition the nodes using multiplex leiden clustering.
+
+    Parameters
+    ----------
+    latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrix of row-wise neighbor definitions in the latent space
+        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+    spatial_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrix of row-wise neighbor definitions in the topological space
+        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+    directed : tuple[bool, bool], optional
+        Whether to use a directed graph for latent and topological neighbors,
+        respectively.
+    use_weights : bool, optional
+        Whether to use weights for the edges.
+    n_iterations : int, optional
+        Number of iterations to run the Leiden algorithm. If the number is negative it
+        is run until convergence.
+    partition_type : optional
+        A :py:class:`leidenalg.VertexPartition.MutableVertexPartition` to be used.
+    layer_ratio : tuple[int, int], optional
+        The ratio of the weighting of the layers in latent and topological space.
+        A higher ratio will increase relevance of the topological neighbors and lead to
+        more spatially homogeneous clusters.
+    latent_partition_kwargs : dict | None, optional
+        Keyword arguments for the latent space partition.
+    spatial_partition_kwargs : dict | None, optional
+        Keyword arguments for the topological space partition.
+    seed : int, optional
+        Randoem seed.
+
+    Returns
+    -------
+    numpy.ndarray[numpy.integer]
+        Cluster assignment.
+    """
 
     adjacency_latent = _build_igraph(latent_neighbors, directed=directed[0])
     adjacency_spatial = _build_igraph(spatial_neighbors, directed=directed[1])
@@ -60,7 +97,7 @@ def leiden_multiplex(
 
     _ = optimiser.optimise_partition_multiplex(
         [latent_part, spatial_part],
-        layer_weights=list(layer_weights),
+        layer_weights=[1, 1 * layer_ratio],
         n_iterations=n_iterations,
     )
 
@@ -78,13 +115,59 @@ def spatialleiden(
     use_weights: bool = True,
     n_iterations: int = -1,
     partition_type=la.RBConfigurationVertexPartition,
-    layer_weights: tuple[int, int] = (1, 1),
+    layer_ratio: float = 1,
     latent_distance_key: str = "connectivities",
     spatial_distance_key: str = "spatial_connectivities",
     latent_partition_kwargs: dict | None = None,
     spatial_partition_kwargs: dict | None = None,
     seed: int = 42,
 ):
+    """
+    Perform SpatialLeiden clustering.
+
+    This is a wrapper around :py:func:`spatialleiden.multiplex_leiden` that can directly
+    use :py:class:`anndata.AnnData` as input and to save results.
+
+    Parameters
+    ----------
+    adata : anndata.AnnData
+    resolution : tuple[int, int], optional
+        resolution for the latent space and topological space layer, respectively.
+    latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrix of row-wise neighbor definitions in the latent space
+        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+    spatial_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrix of row-wise neighbor definitions in the topological space
+        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+    key_added : str, optional
+        Key to store the clustering results in :py:attr:`anndata.AnnData.obs`
+    directed : tuple[bool, bool], optional
+        Whether to use a directed graph for latent and topological neighbors,
+        respectively.
+    use_weights : bool, optional
+        Whether to use weights for the edges.
+    n_iterations : int, optional
+        Number of iterations to run the Leiden algorithm. If the number is negative it
+        runs until convergence.
+    partition_type : optional
+        A :py:class:`leidenalg.VertexPartition.MutableVertexPartition` to be used.
+    layer_ratio : tuple[int, int], optional
+        The ratio of the weighting of the layers in latent and topological space.
+        A higher ratio will increase relevance of the topological neighbors and lead to
+        more spatially homogeneous clusters.
+    latent_distance_key : str, optional
+        Key to use for the latent neighbor connectivities in
+        :py:attr:`anndata.AnnData.obsp`. Only used if `latent_neighbors` is `None`.
+    spatial_distance_key : str, optional
+        Key to use for the spatial neighbor connectivities in
+        :py:attr:`anndata.AnnData.obsp`. Only used if `spatial_neighbors` is `None`.
+    latent_partition_kwargs : dict | None, optional
+        Keyword arguments for the latent space partition.
+    spatial_partition_kwargs : dict | None, optional
+        Keyword arguments for the topological space partition.
+    seed : int, optional
+        Random seed.
+    """
 
     if latent_neighbors is None:
         latent_distances = adata.obsp[latent_distance_key]
@@ -100,14 +183,14 @@ def spatialleiden(
         resolution
     )
 
-    cluster = leiden_multiplex(
+    cluster = multiplex_leiden(
         latent_distances,
         spatial_distances,
         directed=directed,
         use_weights=use_weights,
         n_iterations=n_iterations,
         partition_type=partition_type,
-        layer_weights=layer_weights,
+        layer_ratio=layer_ratio,
         spatial_partition_kwargs=spatial_partition_kwargs,
         latent_partition_kwargs=latent_partition_kwargs,
         seed=seed,

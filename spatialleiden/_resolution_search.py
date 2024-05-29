@@ -50,6 +50,30 @@ def search_resolution_latent(
     n_iterations: int = 15,
     **kwargs,
 ) -> float:
+    """
+    Search the resolution to obtain `n` clusters using Leiden clustering.
+
+    Parameters
+    ----------
+    adata : anndata.AnnData
+    ncluster : int
+        Number of clusters.
+    start : float, optional
+        Starting point for resolution.
+    step : float, optional
+        Increment if cluster number is incorrect.
+    n_iterations : int, optional
+        Maximum number of iterations before stopping. If correct number of clusters is
+        obtained it will stop early.
+    kwargs
+        Other keyword arguments are passed to :py:func:`scanpy.tl.leiden`.
+
+    Returns
+    -------
+    float
+        Target resolution.
+    """
+
     def ncluster4res_leiden(resolution: float) -> int:
         sc.tl.leiden(adata, resolution=resolution, **kwargs)
         return adata.obs[key_added].cat.categories.size
@@ -68,6 +92,30 @@ def search_resolution_spatial(
     n_iterations: int = 15,
     **kwargs,
 ) -> float:
+    """
+    Search the resolution to obtain `n` clusters using Multiplex Leiden clustering.
+
+    Parameters
+    ----------
+    adata : anndata.AnnData
+    ncluster : int
+        Number of clusters.
+    start : float, optional
+        Starting point for resolution.
+    step : float, optional
+        Increment if cluster number is incorrect.
+    n_iterations : int, optional
+        Maximum number of iterations before stopping. If correct number of clusters is
+        obtained it will stop early.
+    kwargs
+        Other keyword arguments are passed to :py:func:`spatialleiden.spatialleiden`.
+
+    Returns
+    -------
+    float
+        Target resolution for the topological space.
+    """
+
     def ncluster4res_spatialleiden(resolution: float) -> int:
         spatial_partition_kwargs["resolution_parameter"] = resolution
         spatialleiden(
@@ -96,6 +144,31 @@ def search_resolution(
     latent_kwargs: dict | None = None,
     spatial_kwargs: dict | None = None,
 ) -> tuple[float, float]:
+    """
+    Search the resolution to obtain `n` clusters using Multiplex Leiden clustering.
+
+    Parameters
+    ----------
+    adata : anndata.AnnData
+    ncluster : int
+        Number of clusters.
+    start : float, optional
+        Starting point for resolution.
+    step : float, optional
+        Increment if cluster number is incorrect.
+    n_iterations : int, optional
+        Maximum number of iterations before stopping. If correct number of clusters is
+        obtained it will stop early.
+    latent_kwargs : dict | None, optional
+        Keyword arguments passed to :py:func:`scanpy.tl.leiden`.
+    spatial_kwargs : dict | None, optional
+        Keyword arguments passed to :py:func:`spatialleiden.spatialleiden`.
+
+    Returns
+    -------
+    tuple[float, float]
+        Target resolution for the latent and topological space.
+    """
     latent_kwargs = dict() if latent_kwargs is None else latent_kwargs
     spatial_kwargs = dict() if spatial_kwargs is None else spatial_kwargs
 
