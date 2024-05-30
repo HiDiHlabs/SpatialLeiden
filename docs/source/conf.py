@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 project = "SpatialLeiden"
 copyright = f"""
-{datetime.now():%Y}, Niklas Müller-Bötticher, Naveed Ishaque, Roland Eils,
+{datetime.now():%Y}, Niklas Müller-Bötticher, Shashwat Sahay, Naveed Ishaque, Roland Eils,
 Berlin Institute of Health @ Charité"""
 author = "Niklas Müller-Bötticher"
 version = importlib.metadata.version("spatialleiden")

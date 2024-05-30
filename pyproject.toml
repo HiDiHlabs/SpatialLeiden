@@ -13,6 +13,7 @@ dynamic         = ["version"]
 
 authors = [
     { name = "Niklas Müller-Bötticher", email = "niklas.mueller-boetticher@charite.de" },
+    { name = "Shashwat Sahay", email = "shashwatsahay.rsg@gmail.com" },
 ]
 dependencies = [
     "anndata",
