@@ -18,7 +18,7 @@ authors = [
 dependencies = [
     "anndata",
     "igraph",
-    "leidenalg>=0.10",
+    "leidenalg~=0.10.2",
     "numpy>=1.21",
     "scanpy",
     "scipy>=1.9",
