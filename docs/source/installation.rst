@@ -22,7 +22,7 @@ planning to add it to `bioconda <https://bioconda.github.io/>`_ soon.
 
 .. .. code-block:: bash
 
-..     conda install -c conda-forge multispaeti
+..     conda install -c conda-forge spatialleiden
 
 .. .. note::
 
