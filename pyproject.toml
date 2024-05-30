@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "spatialleiden"
-description     = "Implementation of multiplex Leiden for analysis of spatial tnanscriptomics data."
+description     = "Implementation of multiplex Leiden for analysis of spatial omics data."
 readme          = { file = "README.md", content-type = "text/markdown" }
 license         = { file = "LICENSE" }
 requires-python = ">=3.10"
@@ -13,8 +13,16 @@ dynamic         = ["version"]
 
 authors = [
     { name = "Niklas Müller-Bötticher", email = "niklas.mueller-boetticher@charite.de" },
+    { name = "Shashwat Sahay", email = "shashwatsahay.rsg@gmail.com" },
 ]
-dependencies = ["igraph", "leidenalg>=0.10", "numpy>=1.21", "scanpy", "scipy>=1.9"]
+dependencies = [
+    "anndata",
+    "igraph",
+    "leidenalg~=0.10.2",
+    "numpy>=1.21",
+    "scanpy",
+    "scipy>=1.9",
+]
 classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
