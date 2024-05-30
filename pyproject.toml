@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name            = "spatialleiden"
-description     = "Implementation of multiplex Leiden for analysis of spatial transcriptomics data."
+description     = "Implementation of multiplex Leiden for analysis of spatial omics data."
 readme          = { file = "README.md", content-type = "text/markdown" }
 license         = { file = "LICENSE" }
 requires-python = ">=3.10"

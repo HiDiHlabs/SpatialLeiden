@@ -9,7 +9,7 @@
 
 ``SpatialLeiden`` is an implementation of
 [Multiplex Leiden clustering](https://leidenalg.readthedocs.io/en/stable/multiplex.html)
-that can be used to cluster spatially resolved transcriptomics data.
+that can be used to cluster spatially resolved omics data.
 
 ``SpatialLeiden`` integrates with the [scverse](https://scverse.org/) by leveraging
 [scanpy](https://scanpy.readthedocs.io/) and [anndata](https://anndata.readthedocs.io/)
