@@ -12,7 +12,7 @@ project = "SpatialLeiden"
 copyright = f"""
 {datetime.now():%Y}, Niklas Müller-Bötticher, Shashwat Sahay, Naveed Ishaque, Roland Eils,
 Berlin Institute of Health @ Charité"""
-author = "Niklas Müller-Bötticher"
+author = "Niklas Müller-Bötticher & Shashwat Sahay"
 version = importlib.metadata.version("spatialleiden")
 release = version
 
