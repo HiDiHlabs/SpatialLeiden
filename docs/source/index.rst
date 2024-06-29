@@ -16,6 +16,7 @@ but can also be used independently.
 
    self
    installation
+   usage
    api
 
 

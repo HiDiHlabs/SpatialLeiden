@@ -27,6 +27,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.autosummary",
     "sphinx.ext.mathjax",
+    "myst_nb",
 ]
 
 
@@ -41,6 +42,8 @@ autosummary_imported_members = True
 nitpicky = True
 nitpick_ignore = [("py:class", "optional")]
 
+# MyST-NB config
+nb_execution_timeout = 3 * 60
 
 exclude_patterns: list[str] = []
 
@@ -51,6 +54,7 @@ intersphinx_mapping = dict(
     python=("https://docs.python.org/3", None),
     scanpy=("https://scanpy.readthedocs.io/en/stable/", None),
     scipy=("https://docs.scipy.org/doc/scipy/", None),
+    squidpy=("https://squidpy.readthedocs.io/en/stable/", None),
 )
 
 # -- Options for HTML output -------------------------------------------------

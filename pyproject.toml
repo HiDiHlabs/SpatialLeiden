@@ -34,7 +34,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme"]
+docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme", "squidpy", "myst-nb"]
 dev  = ["spatialleiden[docs]", "pre-commit"]
 
 [project.urls]
