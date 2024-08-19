@@ -17,13 +17,26 @@ but can also be used independently.
 
 ## Installation
 
-`spatialleiden` will be made available on [PyPI](https://pypi.org/) and
-[bioconda](https://bioconda.github.io/). For detailed installation instructions
-please refer to the [documentation](https://spatialleiden.readthedocs.io/en/stable/installation.html).
+`spatialleiden` is available on [PyPI](https://pypi.org/project/spatialleiden/) and
+[bioconda](https://bioconda.github.io/recipes/spatialleiden/README.html).
+
+```sh
+# PyPI
+pip install spatialleiden
+```
+
+```sh
+# or conda
+conda install bioconda::spatialleiden
+```
+
+For detailed installation instructions please refer to the
+[documentation](https://spatialleiden.readthedocs.io/en/stable/installation.html).
 
 ## Documentation
 
-For documentation of the package please refer to the [ReadTheDocs page](https://spatialleiden.readthedocs.io/)
+For documentation of the package please refer to the
+[ReadTheDocs page](https://spatialleiden.readthedocs.io/).
 
 ## Versioning
 
