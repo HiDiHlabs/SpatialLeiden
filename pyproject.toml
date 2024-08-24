@@ -30,11 +30,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Typing :: Typed",
 ]
 
 [project.optional-dependencies]
-docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme"]
+docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme", "squidpy", "myst-nb"]
 dev  = ["spatialleiden[docs]", "pre-commit"]
 
 [project.urls]

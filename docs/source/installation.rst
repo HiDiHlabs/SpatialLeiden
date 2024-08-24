@@ -5,7 +5,8 @@ Installation
 PyPi and ``pip``
 ----------------
 
-To install ``spatialleiden`` from `PyPI <https://pypi.org/>`_ using ``pip`` just run
+To install ``spatialleiden`` from `PyPI <https://pypi.org/project/spatialleiden/>`_
+using ``pip`` just run
 
 .. code-block:: bash
 
@@ -15,19 +16,19 @@ To install ``spatialleiden`` from `PyPI <https://pypi.org/>`_ using ``pip`` just
 bioconda and ``conda``
 ----------------------
 
-``spatialleiden`` is not yet available for
-`Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ installations. But we are
-planning to add it to `bioconda <https://bioconda.github.io/>`_ soon.
+``spatialleiden`` is available for `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_
+installations from the `bioconda <https://bioconda.github.io/recipes/spatialleiden/README.html>`_
+channel.
 
 
-.. .. code-block:: bash
+.. code-block:: bash
 
-..     conda install -c conda-forge spatialleiden
+    conda install bioconda::spatialleiden
 
-.. .. note::
+.. note::
 
-..     Of course, it is also possible to use ``mamba`` instead of ``conda``
-..     to speed up the installation.
+    Of course, it is also possible to use ``mamba`` instead of ``conda``
+    to speed up the installation.
 
 
 From GitHub
