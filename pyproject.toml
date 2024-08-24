@@ -39,9 +39,9 @@ docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme", "squidpy", "myst-nb"]
 dev  = ["spatialleiden[docs]", "pre-commit"]
 
 [project.urls]
-homepage      = "https://github.com/HiDiHlabs/SpatialLeiden"
-documentation = "https://spatialleiden.readthedocs.io"
-repository    = "https://github.com/HiDiHlabs/SpatialLeiden"
+Homepage      = "https://github.com/HiDiHlabs/SpatialLeiden"
+Documentation = "https://spatialleiden.readthedocs.io"
+Repository    = "https://github.com/HiDiHlabs/SpatialLeiden"
 
 
 [tool]
