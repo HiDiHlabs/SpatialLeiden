@@ -42,6 +42,7 @@ dev  = ["spatialleiden[docs]", "pre-commit"]
 Homepage      = "https://github.com/HiDiHlabs/SpatialLeiden"
 Documentation = "https://spatialleiden.readthedocs.io"
 Repository    = "https://github.com/HiDiHlabs/SpatialLeiden"
+Issues        = "https://github.com/HiDiHlabs/SpatialLeiden/issues"
 
 
 [tool]
