@@ -31,7 +31,7 @@ conda install bioconda::spatialleiden
 ```
 
 For detailed installation instructions please refer to the
-[documentation](https://spatialleiden.readthedocs.io/stable/installation.html).
+[documentation](https://spatialleiden.readthedocs.io/page/installation.html).
 
 ## Documentation
 
