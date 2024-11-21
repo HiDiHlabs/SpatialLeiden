@@ -40,7 +40,7 @@ def _search_resolution(
 
 def search_resolution_latent(
     adata: AnnData,
-    ncluster: int,
+    n_clusters: int,
     *,
     start: float = 1,
     step: float = 0.1,
@@ -53,7 +53,7 @@ def search_resolution_latent(
     Parameters
     ----------
     adata : anndata.AnnData
-    ncluster : int
+    n_clusters : int
         Number of clusters.
     start : float, optional
         Starting point for resolution.
@@ -77,12 +77,14 @@ def search_resolution_latent(
 
     key_added = kwargs.pop("key_added", "leiden")
 
-    return _search_resolution(ncluster4res_leiden, ncluster, start, step, n_iterations)
+    return _search_resolution(
+        ncluster4res_leiden, n_clusters, start, step, n_iterations
+    )
 
 
 def search_resolution_spatial(
     adata: AnnData,
-    ncluster: int,
+    n_clusters: int,
     *,
     start: float = 0.4,
     step: float = 0.1,
@@ -99,7 +101,7 @@ def search_resolution_spatial(
     Parameters
     ----------
     adata : anndata.AnnData
-    ncluster : int
+    n_clusters : int
         Number of clusters.
     start : float, optional
         Starting point for resolution.
@@ -130,7 +132,7 @@ def search_resolution_spatial(
     resolution_user = kwargs.pop("resolution", (1, 1))
 
     return _search_resolution(
-        ncluster4res_spatialleiden, ncluster, start, step, n_iterations
+        ncluster4res_spatialleiden, n_clusters, start, step, n_iterations
     )
 
 
