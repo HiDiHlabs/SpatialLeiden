@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from warnings import warn
 
 import scanpy as sc
 from anndata import AnnData
@@ -8,37 +9,33 @@ from ._multiplex_leiden import spatialleiden
 
 def _search_resolution(
     fn: Callable[[float], int],
-    ncluster: int,
+    n_clusters: int,
     start: float = 1,
     step: float = 0.1,
     n_iterations: int = 15,
 ) -> float:
-    # adapted from SpaGCN.search_res (https://github.com/jianhuupenn/SpaGCN)
-    res = start
-    old_ncluster = fn(res)
-    iter = 1
-    while old_ncluster != ncluster:
-        old_sign = 1 if (old_ncluster < ncluster) else -1
-        new_ncluster = fn(res + step * old_sign)
-        if new_ncluster == ncluster:
-            res = res + step * old_sign
-            # print(f"Recommended res = {res:.2f}")
-            return res
-        new_sign = 1 if (new_ncluster < ncluster) else -1
-        if new_sign == old_sign:
-            res = res + step * old_sign
-            # print(f"Res changed to {res:.2f}")
-            old_ncluster = new_ncluster
-        else:
-            step = step / 2
-            # print(f"Step changed to {step:.2f}")
-        if iter > n_iterations:
-            # print("Exact resolution not found")
-            # print(f"Recommended res =  {res:.2f}")
-            return res
-        iter += 1
-    # print(f"Recommended res = {res:.2f}")
-    return res
+
+    if n_iterations <= 2:
+        raise ValueError("At least 2 iterations are necessary")
+    resolution = start
+    n = fn(resolution)
+    i = 1
+    while n != n_clusters:
+        if i >= n_iterations:
+            warn(
+                "Correct resolution not found. Consider increasing the number of "
+                "iterations or adjusting the step size."
+            )
+            break
+        sign = 1 if n < n_clusters else -1
+        resolution += step * sign  # TODO what happens when approaching zero
+        n = fn(resolution)
+        new_sign = 1 if n < n_clusters else -1
+        if new_sign != sign:
+            step /= 2
+        i += 1
+
+    return resolution
 
 
 def search_resolution_latent(
