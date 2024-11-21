@@ -75,7 +75,7 @@ def search_resolution_latent(
     """
 
     def ncluster4res_leiden(resolution: float) -> int:
-        sc.tl.leiden(adata, resolution=resolution, **kwargs)
+        sc.tl.leiden(adata, resolution=resolution, key_added=key_added, **kwargs)
         return adata.obs[key_added].cat.categories.size
 
     key_added = kwargs.pop("key_added", "leiden")
