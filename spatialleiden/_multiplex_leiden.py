@@ -13,17 +13,13 @@ _GraphArray: TypeAlias = sparray | spmatrix | np.ndarray
 
 
 def _build_igraph(adjacency: _GraphArray, *, directed: bool = True) -> Graph:
-    # adapted from scanpy https://github.com/scverse/scanpy
     sources, targets, weights = find(adjacency)
-    g = Graph(directed=directed)
-    g.add_vertices(adjacency.shape[0])
-    g.add_edges(list(zip(sources, targets)))
-    g.es["weight"] = weights
-    if g.vcount() != adjacency.shape[0]:
-        raise RuntimeError(
-            f"The constructed graph has only {g.vcount()} nodes. "
-            "Your adjacency matrix contained redundant nodes."
-        )
+    g = Graph(
+        n=adjacency.shape[0],
+        edges=zip(sources, targets),
+        directed=directed,
+        edge_attrs={"weight": weights},
+    )
     return g
 
 
