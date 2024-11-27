@@ -46,6 +46,17 @@ Müller-Bötticher, N., Sahay, S., Eils, R., and Ishaque, N.
 "SpatialLeiden - Spatially-aware Leiden clustering"
 bioRxiv (2024) https://doi.org/10.1101/2024.08.23.609349
 
+```
+@article {spatialleiden2024,
+	author = {Müller-Bötticher, Niklas and Sahay, Shashwat and Eils, Roland and Ishaque, Naveed},
+	title = {SpatialLeiden - Spatially-aware Leiden clustering},
+	year = {2024},
+	doi = {10.1101/2024.08.23.609349},
+	journal = {bioRxiv},
+	publisher = {Cold Spring Harbor Laboratory}
+}
+```
+
 ## Versioning
 
 This project follows the [SemVer](https://semver.org/) guidelines for versioning.
