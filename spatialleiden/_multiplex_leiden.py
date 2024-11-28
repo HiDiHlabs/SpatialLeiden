@@ -121,8 +121,8 @@ def spatialleiden(
     n_iterations: int = -1,
     partition_type=la.RBConfigurationVertexPartition,
     layer_ratio: float = 1,
-    latent_distance_key: str = "connectivities",
-    spatial_distance_key: str = "spatial_connectivities",
+    latent_neighbors_key: str = "connectivities",
+    spatial_neighbors_key: str = "spatial_connectivities",
     latent_partition_kwargs: dict[str, Any] | None = None,
     spatial_partition_kwargs: dict[str, Any] | None = None,
     seed: int = 42,
@@ -162,10 +162,10 @@ def spatialleiden(
         The ratio of the weighting of the layers; latent space vs spatial.
         A higher ratio will increase relevance of the spatial neighbors and lead to
         more spatially homogeneous clusters.
-    latent_distance_key : str, optional
+    latent_neighbors_key : str, optional
         Key to use for the latent neighbor connectivities in
         :py:attr:`anndata.AnnData.obsp`. Only used if `latent_neighbors` is `None`.
-    spatial_distance_key : str, optional
+    spatial_neighbors_key : str, optional
         Key to use for the spatial neighbor connectivities in
         :py:attr:`anndata.AnnData.obsp`. Only used if `spatial_neighbors` is `None`.
     latent_partition_kwargs : dict | None, optional
@@ -177,9 +177,9 @@ def spatialleiden(
     """
 
     if latent_neighbors is None:
-        latent_distances = adata.obsp[latent_distance_key]
+        latent_connectivities = adata.obsp[latent_neighbors_key]
     if spatial_neighbors is None:
-        spatial_distances = adata.obsp[spatial_distance_key]
+        spatial_connectivities = adata.obsp[spatial_neighbors_key]
 
     if latent_partition_kwargs is None:
         latent_partition_kwargs = dict()
@@ -190,8 +190,8 @@ def spatialleiden(
     spatial_partition_kwargs["resolution_parameter"] = resolution[1]
 
     cluster = multiplex_leiden(
-        latent_distances,
-        spatial_distances,
+        latent_connectivities,
+        spatial_connectivities,
         directed=directed,
         use_weights=use_weights,
         n_iterations=n_iterations,
