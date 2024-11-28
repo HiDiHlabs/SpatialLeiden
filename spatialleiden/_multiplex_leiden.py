@@ -1,11 +1,12 @@
 from collections.abc import Collection
 from types import NoneType
-from typing import Any, TypeAlias
+from typing import Any, Type, TypeAlias
 
 import leidenalg as la
 import numpy as np
 from anndata import AnnData
 from igraph import Graph
+from leidenalg.VertexPartition import MutableVertexPartition
 from numpy.typing import NDArray
 from scipy.sparse import find, sparray, spmatrix
 
@@ -28,7 +29,7 @@ def multiplex_leiden(
     directed: bool | Collection[bool] = True,
     use_weights: bool | Collection[bool] = True,
     n_iterations: int = -1,
-    partition_type=la.RBConfigurationVertexPartition,
+    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_weights: float | Collection[float] = 1,
     partition_kwargs: dict | None | Collection[dict | None] = None,
     seed: int = 42,
@@ -119,7 +120,7 @@ def spatialleiden(
     directed: tuple[bool, bool] = (True, True),
     use_weights: tuple[bool, bool] = (True, True),
     n_iterations: int = -1,
-    partition_type=la.RBConfigurationVertexPartition,
+    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_ratio: float = 1,
     latent_neighbors_key: str = "connectivities",
     spatial_neighbors_key: str = "spatial_connectivities",
