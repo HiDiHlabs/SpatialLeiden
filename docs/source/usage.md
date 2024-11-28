@@ -56,7 +56,7 @@ sc.pp.pca(adata, random_state=seed)
 sc.pp.neighbors(adata, random_state=seed)
 ```
 
-For SpatialLeiden we need an additional graph representing the connectivities in the topological space. Here we will use a kNN graph with 10 neighbors that we generate with {py:func}`squidpy.gr.spatial_neighbors`. Alternatives are Delaunay triangulation or regular grids in case of e.g. Visium data.
+For SpatialLeiden we need an additional graph representing the neighbors in space i.e. which cells are close/next to each other. Here we will use a kNN graph with 10 neighbors that we generate with {py:func}`squidpy.gr.spatial_neighbors`. Alternatives are Delaunay triangulation or regular grids in case of e.g. Visium data.
 
 We can use the calculated distances between neighboring points and transform them into connectivities using the {py:func}`spatialleiden.distance2connectivity` function.
 
@@ -70,7 +70,7 @@ adata.obsp["spatial_connectivities"] = sl.distance2connectivity(
 
 Now, we can already run {py:func}`spatialleiden.spatialleiden` (which we will also compare to normal Leiden clustering).
 
-The `layer_ratio` determines the weighting between the gene expression and the topological layer and is influenced by the graph structures (i.e. how many connections exist, the edge weights, etc.); the lower the value is the closer SpatialLeiden will be to normal Leiden clustering, while higher values lead to more spatially homogeneous clusters.
+The `layer_ratio` determines the weighting between the gene expression and the spatial layer and is influenced by the graph structures (i.e. how many connections exist, the edge weights, etc.); the lower the value is the closer SpatialLeiden will be to normal Leiden clustering, while higher values lead to more spatially homogeneous clusters.
 
 The resolution has the same effect as in Leiden clustering (higher resolution will lead to more clusters) and can be defined for each of the layers (but for now is left at its default value).
 

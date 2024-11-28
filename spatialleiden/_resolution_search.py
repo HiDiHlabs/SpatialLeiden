@@ -116,7 +116,7 @@ def search_resolution_spatial(
     Returns
     -------
     float
-        Target resolution for the topological space.
+        Target resolution for the spatial layer.
     """
 
     def ncluster4res_spatialleiden(resolution: float) -> int:
@@ -147,7 +147,7 @@ def search_resolution(
     spatial_kwargs: dict | None = None,
 ) -> tuple[float, float]:
     """
-    Search the resolutions of the topological and latent layer to obtain `n` clusters
+    Search the resolutions of the spatial and latent space layer to obtain `n` clusters
     using SpatialLeiden clustering.
 
     Parameters
@@ -170,7 +170,7 @@ def search_resolution(
     Returns
     -------
     tuple[float, float]
-        Target resolution for the latent and topological space.
+        Target resolution for the latent space and spatial layer.
     """
     latent_kwargs = dict() if latent_kwargs is None else latent_kwargs
     spatial_kwargs = dict() if spatial_kwargs is None else spatial_kwargs
