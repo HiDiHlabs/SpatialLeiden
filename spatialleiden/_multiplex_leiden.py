@@ -1,6 +1,6 @@
 from collections.abc import Collection
 from types import NoneType
-from typing import TypeAlias
+from typing import Any, TypeAlias
 
 import leidenalg as la
 import numpy as np
@@ -123,8 +123,8 @@ def spatialleiden(
     layer_ratio: float = 1,
     latent_distance_key: str = "connectivities",
     spatial_distance_key: str = "spatial_connectivities",
-    latent_partition_kwargs: dict | None = None,
-    spatial_partition_kwargs: dict | None = None,
+    latent_partition_kwargs: dict[str, Any] | None = None,
+    spatial_partition_kwargs: dict[str, Any] | None = None,
     seed: int = 42,
 ):
     """
