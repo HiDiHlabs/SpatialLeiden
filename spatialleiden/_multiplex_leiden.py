@@ -251,9 +251,10 @@ def spatialleiden_multiomics(
     layer_weights: float | collections.abc.Mapping[str, float], optional
         The weighting of the different layers.
     neighbors_key: str | collections.abc.Mapping[str, str], optional
-        Key(s) used to lookup the neighbor graphs for the different modalities.
+        Key(s) used to lookup the neighbor graphs for the different modalities in the
+        corresponding :py:attr:`anndata.Anndata.obsp`.
     spatial_neighbors_key: str, optional
-        Key used to lookup the spatial neighbors graph in :py:attr:`mudata.Mudata.obsm`.
+        Key used to lookup the spatial neighbors graph in :py:attr:`mudata.Mudata.obsp`.
     partition_kwargs: None | collections.abc.Mapping[str, dict[str, typing.Any]], optional
         Keyword arguments for the modality and spatial partitions.
     seed : int, optional
