@@ -11,6 +11,7 @@ Multiplex Leiden
    :toctree: ./generated/
 
    spatialleiden
+   spatialleiden_multiomics
    multiplex_leiden
 
 
