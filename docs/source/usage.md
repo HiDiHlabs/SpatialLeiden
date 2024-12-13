@@ -29,6 +29,11 @@ import anndata as ad
 with NamedTemporaryFile(suffix=".h5ad") as h5ad_file:
     urlretrieve("https://figshare.com/ndownloader/files/40038538", h5ad_file.name)
     adata = ad.read_h5ad(h5ad_file)
+
+
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 ```
 
 First of all we are going to load the relevant packages that we will be working with as well as setting a random seed that we will use throughout this example to make the results reproducible.
@@ -41,7 +46,7 @@ import squidpy as sq
 seed = 42
 ```
 
-The data set consists of 155 genes and ~5,500 cells including their annotation for cell type as well as domains.
+The data set consists of 155 genes and ~5,500 cells including their annotation for the cell type as well as domains.
 
 +++
 
@@ -56,9 +61,31 @@ sc.pp.pca(adata, random_state=seed)
 sc.pp.neighbors(adata, random_state=seed)
 ```
 
-For SpatialLeiden we need an additional graph representing the neighbors in space i.e. which cells are close/next to each other. Here we will use a kNN graph with 10 neighbors that we generate with {py:func}`squidpy.gr.spatial_neighbors`. Alternatives are Delaunay triangulation or regular grids in case of e.g. Visium data.
+### Building spatial neighbor graphs
 
-We can use the calculated distances between neighboring points and transform them into connectivities using the {py:func}`spatialleiden.distance2connectivity` function.
+For SpatialLeiden we need an additional graph representing the neighbors in space i.e.
+which cells are close/next to each other.
+
+What kind of spatial neighbor graph is suitable for the analysis is dependent on the
+technology used to generate the data. Most of the neighborhood structures interesting
+for our use cases can be calculated using {py:func}`squidpy.gr.spatial_neighbors`.
+
+Generally, if the data is generated from a method with a regular lattice it is advisible
+to use this for the analysis;
+* isometric grid (hexagonal): for Visium with `squidpy.gr.spatial_neighbors(adata, coord_type="grid", n_neighs=6)`
+* square grid: for binned Stereo-seq and VisiumHD with `squidpy.gr.spatial_neighbors(adata, coord_type="grid", n_neighs=4)` (using 8 neighbors is also possible)
+
+If your data does not originate from a regular lattice, there are various options to build your neighborhood graph.
+This applies to all imaging-based methodologies that are usually analysed after segmenting cells, but also technolgoies with regular lattices if you use cell segmentation (such as Stereo-seq or VisiumHD).
+* kNN: calculating the *k*-nearest neighbors per cell with `squidpy.gr.spatial_neighbors(adata, coord_type="generic", n_neighs=k)`
+* Delaunay triangulation: `squidpy.gr.spatial_neighbors(adata, coord_type="generic", delaunay=True)`
+* radius-based: with a threshold of *r* units `squidpy.gr.spatial_neighbors(adata, coord_type="generic", radius=r)`
+* other methods such as Gabriel graphs, ...
+
+For the neighborhoods that are not based on regular grids we can, furthermore, scale the weight of each edge bsaed on the distance between the two cells (that's why it is not useful for the regular grid case as the neighbors will be equidistant).
+This can be achieved by calculating connectivities based on the distances using the {py:func}`spatialleiden.distance2connectivity` function.
+
+Here, we will use a kNN graph with 10 neighbors.
 
 ```{code-cell} ipython3
 sq.gr.spatial_neighbors(adata, coord_type="generic", n_neighs=10)
@@ -67,6 +94,8 @@ adata.obsp["spatial_connectivities"] = sl.distance2connectivity(
     adata.obsp["spatial_distances"]
 )
 ```
+
+### Finding clusters
 
 Now, we can already run {py:func}`spatialleiden.spatialleiden` (which we will also compare to normal Leiden clustering).
 
