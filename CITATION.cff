@@ -25,8 +25,11 @@ preferred-citation:
     - family-names: Ishaque
       given-names: Naveed
       orcid: "https://orcid.org/0000-0002-8426-901X"
-  title: "SpatialLeiden - Spatially-aware Leiden clustering"
-  doi: 10.1101/2024.08.23.609349
-  year: 2024
-  journal: bioRxiv
-  publisher: "Cold Spring Harbor Laboratory"
+  title: "SpatialLeiden: spatially aware Leiden clustering"
+  doi: 10.1186/s13059-025-03489-7
+  url: https://doi.org/10.1186/s13059-025-03489-7
+  year: 2025
+  journal: Genome Biology
+  volume: 26
+  issue: 1
+  pages: 24

@@ -14,9 +14,9 @@ Citations
 
 If you are using `spatialleiden` for your research please cite
 
-Müller-Bötticher, N., Sahay, S., Eils, R., and Ishaque, N.
-"SpatialLeiden - Spatially-aware Leiden clustering"
-bioRxiv (2024) https://doi.org/10.1101/2024.08.23.609349
+Müller-Bötticher, N., Sahay, S., Eils, R., & Ishaque, N. (2025).
+SpatialLeiden: spatially aware Leiden clustering.
+*Genome Biology*, 26(1), 24. https://doi.org/10.1186/s13059-025-03489-7
 
 
 .. toctree::
