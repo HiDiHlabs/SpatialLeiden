@@ -45,7 +45,7 @@ def multiplex_leiden(
     ----------
     neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrices of row-wise neighbor definitions for the different layers
-        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+        i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
     directed : bool | collections.abc.Collection[bool], optional
         Whether to use a directed graph for each layer, respectively.
     use_weights : bool | collections.abc.Collection[bool], optional
@@ -143,10 +143,10 @@ def spatialleiden(
         Resolution for the latent space and spatial layer, respectively.
     latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrix of row-wise neighbor definitions in the latent space layer
-        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+        i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
     spatial_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrix of row-wise neighbor definitions in the spatial layer
-        i.e. c\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+        i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
     key_added : str, optional
         Key to store the clustering results in :py:attr:`anndata.AnnData.obs`
     directed : tuple[bool, bool], optional
