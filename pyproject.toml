@@ -36,8 +36,15 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-docs = ["sphinx", "sphinx-copybutton", "sphinx-rtd-theme", "squidpy", "myst-nb"]
-dev  = ["spatialleiden[docs]", "pre-commit"]
+docs = [
+    "sphinx",
+    "sphinx-copybutton",
+    "sphinx-rtd-theme",
+    "squidpy",
+    "dask<2025",         # incompatibility of squidpy with dask >= 2025
+    "myst-nb",
+]
+dev = ["spatialleiden[docs]", "pre-commit"]
 
 [project.urls]
 Homepage      = "https://github.com/HiDiHlabs/SpatialLeiden"
