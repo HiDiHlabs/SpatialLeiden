@@ -68,11 +68,11 @@ def multiplex_leiden(
         Cluster assignment.
     """
 
-    def check_length(x, type, n) -> Collection | list:
+    def check_length(x, type, n: int) -> Collection:
         if isinstance(x, type):
             x = [x] * n
         elif len(x) != n:
-            raise ValueError("")
+            raise ValueError("Incorrect number of parameters")
         return x
 
     n_layers = len(neighbors)
@@ -87,17 +87,14 @@ def multiplex_leiden(
     ]
 
     # parameterise the partitions
-    partition_kwargs_ls = list()
-    for p_kwargs, with_weight in zip(partition_kwargs, use_weights, strict=True):
-        p_kwargs = p_kwargs if p_kwargs is not None else dict()
-        if with_weight:
-            p_kwargs["weights"] = "weight"
-        partition_kwargs_ls.append(p_kwargs)
-
-    partitions = [
-        partition_type(layer, **kwargs)
-        for layer, kwargs in zip(layers, partition_kwargs_ls, strict=True)
-    ]
+    partitions = list()
+    for layer, kwargs, weighted in zip(
+        layers, partition_kwargs, use_weights, strict=True
+    ):
+        kwargs = kwargs if kwargs is not None else dict()
+        if weighted:
+            kwargs["weights"] = "weight"
+        partitions.append(partition_type(layer, **kwargs))
 
     optimiser = la.Optimiser()
     optimiser.set_rng_seed(seed)
