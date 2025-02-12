@@ -138,7 +138,7 @@ def search_resolution_spatial(
 
 def search_resolution(
     adata: AnnData,
-    ncluster: int,
+    n_clusters: int,
     *,
     start: tuple[float, float] = (1.0, 0.4),
     step: float = 0.1,
@@ -153,7 +153,7 @@ def search_resolution(
     Parameters
     ----------
     adata : anndata.AnnData
-    ncluster : int
+    n_clusters : int
         Number of clusters.
     start : float, optional
         Starting point for resolution.
@@ -177,7 +177,7 @@ def search_resolution(
 
     resolution_latent = search_resolution_latent(
         adata,
-        ncluster,
+        n_clusters,
         start=start[0],
         step=step,
         n_iterations=n_iterations,
@@ -187,7 +187,7 @@ def search_resolution(
     spatial_kwargs["resolution"] = (resolution_latent, 1)
     resolution_spatial = search_resolution_spatial(
         adata,
-        ncluster,
+        n_clusters,
         start=start[1],
         step=step,
         n_iterations=n_iterations,
