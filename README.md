@@ -4,6 +4,10 @@
 [![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Docs](https://app.readthedocs.org/projects/spatialleiden/badge/?version=latest)](https://spatialleiden.readthedocs.io)
+[![PyPI](https://img.shields.io/pypi/v/spatialleiden)](https://pypi.org/project/spatialleiden)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/spatialleiden/README.html)
+
 
 ``SpatialLeiden`` is an implementation of
 [Multiplex Leiden clustering](https://leidenalg.readthedocs.io/en/stable/multiplex.html)
