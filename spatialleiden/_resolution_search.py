@@ -14,7 +14,6 @@ def _search_resolution(
     step: float = 0.1,
     n_iterations: int = 15,
 ) -> float:
-
     if n_iterations <= 2:
         raise ValueError("At least 2 iterations are necessary")
     resolution = start
