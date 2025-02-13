@@ -1,0 +1,9 @@
+*.egg-info
+build
+__pycache__
+
+# Sphinx
+generated
+jupyter_execute
+
+*.ipynb
