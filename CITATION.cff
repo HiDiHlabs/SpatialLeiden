@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the article from preferred-citation."
+authors:
+  - family-names: "Müller-Bötticher"
+    given-names: Niklas
+    orcid: "https://orcid.org/0000-0001-5103-7282"
+  - family-names: Sahay
+    given-names: Shashwat
+    orcid: "https://orcid.org/0000-0002-8533-6149"
+title: spatialleiden
+url: "https://github.com/HiDiHlabs/SpatialLeiden"
+date-released: '2024-05-30'
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Müller-Bötticher"
+      given-names: Niklas
+      orcid: "https://orcid.org/0000-0001-5103-7282"
+    - family-names: Sahay
+      given-names: Shashwat
+      orcid: "https://orcid.org/0000-0002-8533-6149"
+    - family-names: Eils
+      given-names: Roland
+      orcid: "https://orcid.org/0000-0002-0034-4036"
+    - family-names: Ishaque
+      given-names: Naveed
+      orcid: "https://orcid.org/0000-0002-8426-901X"
+  title: "SpatialLeiden: spatially aware Leiden clustering"
+  doi: 10.1186/s13059-025-03489-7
+  url: https://doi.org/10.1186/s13059-025-03489-7
+  year: 2025
+  journal: Genome Biology
+  volume: 26
+  issue: 1
+  pages: 24

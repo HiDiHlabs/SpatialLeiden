@@ -44,18 +44,23 @@ For documentation of the package please refer to the
 
 If you are using `spatialleiden` for your research please cite
 
-Müller-Bötticher, N., Sahay, S., Eils, R., and Ishaque, N.
-"SpatialLeiden - Spatially-aware Leiden clustering"
-bioRxiv (2024) https://doi.org/10.1101/2024.08.23.609349
+Müller-Bötticher, N., Sahay, S., Eils, R., & Ishaque, N. (2025).
+SpatialLeiden: spatially aware Leiden clustering.
+*Genome Biology*, 26(1), 24. https://doi.org/10.1186/s13059-025-03489-7
 
 ```
-@article {spatialleiden2024,
+@article{spatialleiden2025,
 	author = {Müller-Bötticher, Niklas and Sahay, Shashwat and Eils, Roland and Ishaque, Naveed},
-	title = {SpatialLeiden - Spatially-aware Leiden clustering},
-	year = {2024},
-	doi = {10.1101/2024.08.23.609349},
-	journal = {bioRxiv},
-	publisher = {Cold Spring Harbor Laboratory}
+	title = {SpatialLeiden: spatially aware Leiden clustering},
+	journal = {Genome Biology},
+	year = {2025},
+	month = {Feb},
+	day = {07},
+	volume = {26},
+	number = {1},
+	pages = {24},
+	doi = {10.1186/s13059-025-03489-7},
+	url = {https://doi.org/10.1186/s13059-025-03489-7}
 }
 ```
 
