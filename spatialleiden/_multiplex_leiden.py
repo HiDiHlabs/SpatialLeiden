@@ -176,9 +176,9 @@ def spatialleiden(
     """
 
     if latent_neighbors is None:
-        latent_connectivities = adata.obsp[latent_neighbors_key]
+        latent_neighbors = adata.obsp[latent_neighbors_key]
     if spatial_neighbors is None:
-        spatial_connectivities = adata.obsp[spatial_neighbors_key]
+        spatial_neighbors = adata.obsp[spatial_neighbors_key]
 
     if latent_partition_kwargs is None:
         latent_partition_kwargs = dict()
@@ -189,8 +189,8 @@ def spatialleiden(
     spatial_partition_kwargs["resolution_parameter"] = resolution[1]
 
     cluster = multiplex_leiden(
-        latent_connectivities,
-        spatial_connectivities,
+        latent_neighbors,
+        spatial_neighbors,
         directed=directed,
         use_weights=use_weights,
         n_iterations=n_iterations,
