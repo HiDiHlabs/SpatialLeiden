@@ -204,7 +204,7 @@ def spatialleiden(
     adata.obs[key_added] = adata.obs[key_added].astype("category")
 
 
-def spatialleiden_multiomics(
+def spatialleiden_multimodal(
     mdata: MuData,
     *,
     resolution: float | Mapping[str, float] = 1,
@@ -220,7 +220,7 @@ def spatialleiden_multiomics(
     seed: int = 42,
 ):
     """
-    Perform Multi-Omics SpatialLeiden clustering.
+    Perform multimodal SpatialLeiden clustering.
 
     This is a wrapper around :py:func:`spatialleiden.multiplex_leiden` that uses
     :py:class:`mudata.MuData` as input and works with multiple layers; one for each
