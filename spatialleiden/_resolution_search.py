@@ -12,15 +12,15 @@ def _search_resolution(
     n_clusters: int,
     start: float = 1,
     step: float = 0.1,
-    n_iterations: int = 15,
+    n_iter: int = 15,
 ) -> float:
-    if n_iterations <= 2:
+    if n_iter <= 2:
         raise ValueError("At least 2 iterations are necessary")
     resolution = start
     n = fn(resolution)
     i = 1
     while n != n_clusters:
-        if i >= n_iterations:
+        if i >= n_iter:
             warn(
                 "Correct resolution not found. Consider increasing the number of "
                 "iterations or adjusting the step size."
@@ -43,7 +43,7 @@ def search_resolution_latent(
     *,
     start: float = 1,
     step: float = 0.1,
-    n_iterations: int = 15,
+    n_iter: int = 15,
     **kwargs,
 ) -> float:
     """
@@ -58,7 +58,7 @@ def search_resolution_latent(
         Starting point for resolution.
     step : float, optional
         Increment if cluster number is incorrect.
-    n_iterations : int, optional
+    n_iter : int, optional
         Maximum number of iterations before stopping. If correct number of clusters is
         obtained it will stop early.
     kwargs
@@ -76,9 +76,7 @@ def search_resolution_latent(
 
     key_added = kwargs.pop("key_added", "leiden")
 
-    return _search_resolution(
-        ncluster4res_leiden, n_clusters, start, step, n_iterations
-    )
+    return _search_resolution(ncluster4res_leiden, n_clusters, start, step, n_iter)
 
 
 def search_resolution_spatial(
@@ -87,7 +85,7 @@ def search_resolution_spatial(
     *,
     start: float = 0.4,
     step: float = 0.1,
-    n_iterations: int = 15,
+    n_iter: int = 15,
     **kwargs,
 ) -> float:
     """
@@ -106,7 +104,7 @@ def search_resolution_spatial(
         Starting point for resolution.
     step : float, optional
         Increment if cluster number is incorrect.
-    n_iterations : int, optional
+    n_iter : int, optional
         Maximum number of iterations before stopping. If correct number of clusters is
         obtained it will stop early.
     kwargs
@@ -131,7 +129,7 @@ def search_resolution_spatial(
     resolution_user = kwargs.pop("resolution", (1, 1))
 
     return _search_resolution(
-        ncluster4res_spatialleiden, n_clusters, start, step, n_iterations
+        ncluster4res_spatialleiden, n_clusters, start, step, n_iter
     )
 
 
@@ -141,7 +139,7 @@ def search_resolution(
     *,
     start: tuple[float, float] = (1.0, 0.4),
     step: float = 0.1,
-    n_iterations: int = 15,
+    n_iter: int = 15,
     latent_kwargs: dict | None = None,
     spatial_kwargs: dict | None = None,
 ) -> tuple[float, float]:
@@ -158,7 +156,7 @@ def search_resolution(
         Starting point for resolution.
     step : float, optional
         Increment if cluster number is incorrect.
-    n_iterations : int, optional
+    n_iter : int, optional
         Maximum number of iterations before stopping. If correct number of clusters is
         obtained it will stop early.
     latent_kwargs : dict | None, optional
@@ -175,21 +173,11 @@ def search_resolution(
     spatial_kwargs = dict() if spatial_kwargs is None else spatial_kwargs
 
     resolution_latent = search_resolution_latent(
-        adata,
-        n_clusters,
-        start=start[0],
-        step=step,
-        n_iterations=n_iterations,
-        **latent_kwargs,
+        adata, n_clusters, start=start[0], step=step, n_iter=n_iter, **latent_kwargs
     )
 
     spatial_kwargs["resolution"] = (resolution_latent, 1)
     resolution_spatial = search_resolution_spatial(
-        adata,
-        n_clusters,
-        start=start[1],
-        step=step,
-        n_iterations=n_iterations,
-        **spatial_kwargs,
+        adata, n_clusters, start=start[1], step=step, n_iter=n_iter, **spatial_kwargs
     )
     return (resolution_latent, resolution_spatial)
