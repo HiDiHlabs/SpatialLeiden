@@ -161,10 +161,10 @@ def spatialleiden(
         The ratio of the weighting of the layers; latent space vs spatial.
         A higher ratio will increase relevance of the spatial neighbors and lead to
         more spatially homogeneous clusters.
-    latent_distance_key : str, optional
+    latent_neighbors_key : str, optional
         Key to use for the latent neighbor connectivities in
         :py:attr:`anndata.AnnData.obsp`. Only used if `latent_neighbors` is `None`.
-    spatial_distance_key : str, optional
+    spatial_neighbors_key : str, optional
         Key to use for the spatial neighbor connectivities in
         :py:attr:`anndata.AnnData.obsp`. Only used if `spatial_neighbors` is `None`.
     latent_partition_kwargs : dict | None, optional
