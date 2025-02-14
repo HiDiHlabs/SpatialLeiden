@@ -16,7 +16,7 @@ authors = [
     { name = "Shashwat Sahay", email = "shashwatsahay.rsg@gmail.com" },
 ]
 dependencies = [
-    "anndata",
+    "anndata>=0.10",
     "igraph",
     "leidenalg~=0.10.2",
     "mudata~=0.3",
