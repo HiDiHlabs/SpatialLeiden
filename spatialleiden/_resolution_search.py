@@ -1,10 +1,9 @@
 from collections.abc import Callable
 from warnings import warn
 
-import scanpy as sc
 from anndata import AnnData
 
-from ._multiplex_leiden import spatialleiden
+from ._multiplex_leiden import leiden, spatialleiden
 
 
 def _search_resolution(
@@ -62,7 +61,7 @@ def search_resolution_latent(
         Maximum number of iterations before stopping. If correct number of clusters is
         obtained it will stop early.
     kwargs
-        Other keyword arguments are passed to :py:func:`scanpy.tl.leiden`.
+        Other keyword arguments are passed to :py:func:`spatialleiden.leiden`.
 
     Returns
     -------
@@ -71,7 +70,7 @@ def search_resolution_latent(
     """
 
     def ncluster4res_leiden(resolution: float) -> int:
-        sc.tl.leiden(adata, resolution=resolution, key_added=key_added, **kwargs)
+        leiden(adata, resolution=resolution, key_added=key_added, **kwargs)
         return adata.obs[key_added].cat.categories.size
 
     key_added = kwargs.pop("key_added", "leiden")
@@ -160,7 +159,7 @@ def search_resolution(
         Maximum number of iterations before stopping. If correct number of clusters is
         obtained it will stop early.
     latent_kwargs : dict | None, optional
-        Keyword arguments passed to :py:func:`scanpy.tl.leiden`.
+        Keyword arguments passed to :py:func:`spatialleiden.leiden`.
     spatial_kwargs : dict | None, optional
         Keyword arguments passed to :py:func:`spatialleiden.spatialleiden`.
 

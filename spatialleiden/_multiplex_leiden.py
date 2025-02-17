@@ -108,6 +108,71 @@ def multiplex_leiden(
     return np.array(partitions[0].membership)
 
 
+def leiden(
+    adata: AnnData,
+    *,
+    resolution: float = 1,
+    neighbors: _GraphArray | None = None,
+    key_added: str = "leiden",
+    directed: bool = True,
+    use_weights: bool = True,
+    n_iterations: int = -1,
+    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
+    neighbors_key: str = "connectivities",
+    seed: int = 42,
+    **partition_kwargs,
+):
+    """
+    Perform Leiden clustering.
+
+    Parameters
+    ----------
+    adata : anndata.AnnData
+    resolution : float, optional
+        Resolution for the partition. Controls the coarseness of the clustering.
+    neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
+        Matrix of row-wise neighbor definitions
+        i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
+    key_added : str, optional
+        Key to store the clustering results in :py:attr:`anndata.AnnData.obs`
+    directed : bool, optional
+        Whether to use a directed graph.
+    use_weights : bool, optional
+        Whether to use weights for the edges.
+    n_iterations : int, optional
+        Number of iterations to run the Leiden algorithm. If the number is negative it
+        runs until convergence.
+    partition_type : typing.Type[leidenalg.VertexPartition.MutableVertexPartition], optional
+        A :py:class:`leidenalg.VertexPartition.MutableVertexPartition` to be used.
+    neighbors_key : str, optional
+        Key to use for the neighbor connectivities in
+        :py:attr:`anndata.AnnData.obsp`. Only used if `neighbors` is `None`.
+    seed : int, optional
+        Random seed.
+    partition_kwargs
+        Keyword arguments for the `partition_type`.
+    """
+
+    if neighbors is None:
+        neighbors = adata.obsp[neighbors_key]
+
+    neighbors_graph = _build_igraph(neighbors, directed=directed)
+
+    partition_kwargs["resolution_parameter"] = resolution
+    if use_weights:
+        partition_kwargs["weights"] = "weight"
+
+    partition = partition_type(neighbors_graph, **partition_kwargs)
+
+    optimiser = la.Optimiser()
+    optimiser.set_rng_seed(seed)
+
+    _ = optimiser.optimise_partition(partition, n_iterations=n_iterations)
+
+    adata.obs[key_added] = partition.membership
+    adata.obs[key_added] = adata.obs[key_added].astype("category")
+
+
 def spatialleiden(
     adata: AnnData,
     *,

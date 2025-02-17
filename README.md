@@ -14,8 +14,7 @@
 that can be used to cluster spatially resolved omics data.
 
 ``SpatialLeiden`` integrates with the [scverse](https://scverse.org/) by leveraging
-[scanpy](https://scanpy.readthedocs.io/) and [anndata](https://anndata.readthedocs.io/)
-but can also be used independently.
+[anndata](https://anndata.readthedocs.io/) but can also be used independently.
 
 ## Installation
 

@@ -21,7 +21,6 @@ dependencies = [
     "leidenalg~=0.10.2",
     "mudata~=0.3",
     "numpy>=1.21",
-    "scanpy",
     "scipy>=1.9",
 ]
 classifiers = [
@@ -40,6 +39,7 @@ docs = [
     "sphinx",
     "sphinx-copybutton",
     "sphinx-rtd-theme",
+    "scanpy",
     "squidpy",
     "dask<2025",         # incompatibility of squidpy with dask >= 2025
     "myst-nb",
