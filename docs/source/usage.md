@@ -43,7 +43,7 @@ import scanpy as sc
 import spatialleiden as sl
 import squidpy as sq
 
-seed = 42
+random_state = 42
 ```
 
 The data set consists of 155 genes and ~5,500 cells including their annotation for the cell type as well as domains.
@@ -56,9 +56,9 @@ We will do some standard preprocessing by log-transforming the data and then usi
 
 ```{code-cell} ipython3
 sc.pp.log1p(adata)
-sc.pp.pca(adata, random_state=seed)
+sc.pp.pca(adata, random_state=random_state)
 
-sc.pp.neighbors(adata, random_state=seed)
+sc.pp.neighbors(adata, random_state=random_state)
 ```
 
 ### Building spatial neighbor graphs
@@ -104,9 +104,11 @@ The `layer_ratio` determines the weighting between the gene expression and the s
 The resolution has the same effect as in Leiden clustering (higher resolution will lead to more clusters) and can be defined for each of the layers (but for now is left at its default value).
 
 ```{code-cell} ipython3
-sc.tl.leiden(adata, directed=False, random_state=seed)
+sc.tl.leiden(adata, directed=False, random_state=random_state)
 
-sl.spatialleiden(adata, layer_ratio=1.8, directed=(False, True), seed=seed)
+sl.spatialleiden(
+    adata, layer_ratio=1.8, directed=(False, True), random_state=random_state
+)
 
 sc.pl.embedding(adata, basis="spatial", color=["leiden", "spatialleiden"])
 ```
@@ -127,8 +129,12 @@ n_clusters = adata.obs["domain"].nunique()
 latent_resolution, spatial_resolution = sl.search_resolution(
     adata,
     n_clusters,
-    latent_kwargs={"seed": seed},
-    spatial_kwargs={"layer_ratio": 1.8, "seed": seed, "directed": (False, True)},
+    latent_kwargs={"random_state": random_state},
+    spatial_kwargs={
+        "layer_ratio": 1.8,
+        "random_state": random_state,
+        "directed": (False, True),
+    },
 )
 
 print(f"Latent resolution: {latent_resolution:.3f}")

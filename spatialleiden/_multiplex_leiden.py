@@ -33,7 +33,7 @@ def multiplex_leiden(
     partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_weights: float | Collection[float] = 1,
     partition_kwargs: dict | None | Collection[dict | None] = None,
-    seed: int = 42,
+    random_state: int = 42,
 ) -> NDArray[np.integer]:
     """
     Partition the nodes using multiplex leiden clustering.
@@ -59,7 +59,7 @@ def multiplex_leiden(
         The weights of each layer, respectively.
     partition_kwargs : dict | None | collections.abc.Collection[dict | None], optional
         Keyword arguments for the partition of each layer.
-    seed : int, optional
+    random_state : int, optional
         Random seed.
 
     Returns
@@ -97,7 +97,7 @@ def multiplex_leiden(
         partitions.append(partition_type(layer, **kwargs))
 
     optimiser = la.Optimiser()
-    optimiser.set_rng_seed(seed)
+    optimiser.set_rng_seed(random_state)
 
     _ = optimiser.optimise_partition_multiplex(
         partitions,
@@ -119,7 +119,7 @@ def leiden(
     n_iterations: int = -1,
     partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     neighbors_key: str = "connectivities",
-    seed: int = 42,
+    random_state: int = 42,
     **partition_kwargs,
 ):
     """
@@ -147,7 +147,7 @@ def leiden(
     neighbors_key : str, optional
         Key to use for the neighbor connectivities in
         :py:attr:`anndata.AnnData.obsp`. Only used if `neighbors` is `None`.
-    seed : int, optional
+    random_state : int, optional
         Random seed.
     partition_kwargs
         Keyword arguments for the `partition_type`.
@@ -165,7 +165,7 @@ def leiden(
     partition = partition_type(neighbors_graph, **partition_kwargs)
 
     optimiser = la.Optimiser()
-    optimiser.set_rng_seed(seed)
+    optimiser.set_rng_seed(random_state)
 
     _ = optimiser.optimise_partition(partition, n_iterations=n_iterations)
 
@@ -189,7 +189,7 @@ def spatialleiden(
     spatial_neighbors_key: str = "spatial_connectivities",
     latent_partition_kwargs: dict[str, Any] | None = None,
     spatial_partition_kwargs: dict[str, Any] | None = None,
-    seed: int = 42,
+    random_state: int = 42,
 ):
     """
     Perform SpatialLeiden clustering.
@@ -236,7 +236,7 @@ def spatialleiden(
         Keyword arguments for the latent space partition.
     spatial_partition_kwargs : dict | None, optional
         Keyword arguments for the spatial partition.
-    seed : int, optional
+    random_state : int, optional
         Random seed.
     """
 
@@ -262,7 +262,7 @@ def spatialleiden(
         partition_type=partition_type,
         layer_weights=[1, layer_ratio],
         partition_kwargs=[latent_partition_kwargs, spatial_partition_kwargs],
-        seed=seed,
+        random_state=random_state,
     )
 
     adata.obs[key_added] = cluster
@@ -282,7 +282,7 @@ def spatialleiden_multimodal(
     neighbors_key: str | Mapping[str, str] = "connectivities",
     spatial_neighbors_key: str = "spatial_connectivities",
     partition_kwargs: None | Mapping[str, dict[str, Any]] = None,
-    seed: int = 42,
+    random_state: int = 42,
 ):
     """
     Perform multimodal SpatialLeiden clustering.
@@ -319,7 +319,7 @@ def spatialleiden_multimodal(
         Key used to lookup the spatial neighbors graph in :py:attr:`mudata.MuData.obsp`.
     partition_kwargs: None | collections.abc.Mapping[str, dict[str, typing.Any]], optional
         Keyword arguments for the modality and spatial partitions.
-    seed : int, optional
+    random_state : int, optional
         Random seed.
     """
     T = TypeVar("T")
@@ -367,7 +367,7 @@ def spatialleiden_multimodal(
         partition_type=partition_type,
         layer_weights=value_or_mapping_to_list(layer_weights, modalities),
         partition_kwargs=partition_kwargs_ls,
-        seed=seed,
+        random_state=random_state,
     )
 
     mdata.obs[key_added] = cluster
