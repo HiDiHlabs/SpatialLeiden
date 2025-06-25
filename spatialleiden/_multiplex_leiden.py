@@ -176,12 +176,12 @@ def leiden(
 def spatialleiden(
     adata: AnnData,
     *,
-    resolution: tuple[float, float] = (1, 1),
+    resolution: float | tuple[float, float] = 1,
     latent_neighbors: _GraphArray | None = None,
     spatial_neighbors: _GraphArray | None = None,
     key_added: str = "spatialleiden",
-    directed: tuple[bool, bool] = (True, True),
-    use_weights: tuple[bool, bool] = (True, True),
+    directed: bool | tuple[bool, bool] = True,
+    use_weights: bool | tuple[bool, bool] = True,
     n_iterations: int = -1,
     partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_ratio: float = 1,
@@ -250,6 +250,8 @@ def spatialleiden(
     if spatial_partition_kwargs is None:
         spatial_partition_kwargs = dict()
 
+    if isinstance(resolution, (int, float)):
+        resolution = (resolution, resolution)
     latent_partition_kwargs["resolution_parameter"] = resolution[0]
     spatial_partition_kwargs["resolution_parameter"] = resolution[1]
 
