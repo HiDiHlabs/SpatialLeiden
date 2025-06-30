@@ -1,5 +1,6 @@
 from importlib.metadata import PackageNotFoundError, version
 
+from . import gpu
 from ._multiplex_leiden import (
     leiden,
     multiplex_leiden,
@@ -22,6 +23,7 @@ del PackageNotFoundError, version
 
 
 __all__ = [
+    "gpu",
     "leiden",
     "multiplex_leiden",
     "spatialleiden",

@@ -49,6 +49,7 @@ exclude_patterns: list[str] = []
 
 intersphinx_mapping = dict(
     anndata=("https://anndata.readthedocs.io/en/stable/", None),
+    # cugraph=("https://docs.rapids.ai/api/cugraph", None),
     matplotlib=("https://matplotlib.org/stable/", None),
     mudata=("https://mudata.readthedocs.io/en/stable/", None),
     numpy=("https://numpy.org/doc/stable/", None),

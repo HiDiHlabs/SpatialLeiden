@@ -12,6 +12,10 @@ using ``pip`` just run
 
     pip install spatialleiden
 
+.. note::
+
+    GPU installation
+
 
 bioconda and ``conda``
 ----------------------
