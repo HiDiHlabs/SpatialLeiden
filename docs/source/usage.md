@@ -2,6 +2,7 @@
 file_format: mystnb
 kernelspec:
   name: python
+  display_name: python
 jupytext:
   text_representation:
     extension: .md
@@ -31,9 +32,11 @@ with NamedTemporaryFile(suffix=".h5ad") as h5ad_file:
     adata = ad.read_h5ad(h5ad_file)
 
 
+# This is not recommended! Suppressing the warnings is only done because the code is run
+# when building the docs and would clutter the webpage
 import warnings
 
-warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore")
 ```
 
 First of all we are going to load the relevant packages that we will be working with as well as setting a random seed that we will use throughout this example to make the results reproducible.
