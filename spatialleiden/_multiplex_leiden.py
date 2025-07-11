@@ -201,8 +201,9 @@ def spatialleiden(
     Parameters
     ----------
     adata : anndata.AnnData
-    resolution : tuple[float, float], optional
+    resolution : float | tuple[float, float], optional
         Resolution for the latent space and spatial layer, respectively.
+        A single float applies to both layers.
     latent_neighbors : scipy.sparse.sparray | scipy.sparse.spmatrix | numpy.ndarray
         Matrix of row-wise neighbor definitions in the latent space layer
         i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
@@ -211,12 +212,12 @@ def spatialleiden(
         i.e. c\\ :sub:`ij` is the connectivity of i :math:`\\to` j.
     key_added : str, optional
         Key to store the clustering results in :py:attr:`anndata.AnnData.obs`
-    directed : tuple[bool, bool], optional
+    directed : bool | tuple[bool, bool], optional
         Whether to use a directed graph for latent space and spatial neighbors,
-        respectively.
-    use_weights : tuple[bool, bool], optional
+        respectively. A single bool applies to both layers.
+    use_weights : bool | tuple[bool, bool], optional
         Whether to use weights for the edges for latent space and spatial neighbors,
-        respectively.
+        respectively. A single bool applies to both layers.
     n_iterations : int, optional
         Number of iterations to run the Leiden algorithm. If the number is negative it
         runs until convergence.

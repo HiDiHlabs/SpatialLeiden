@@ -151,8 +151,8 @@ def search_resolution(
     adata : anndata.AnnData
     n_clusters : int
         Number of clusters.
-    start : float, optional
-        Starting point for resolution.
+    start : tuple[float, float], optional
+        Starting points for resolution, latent and spatial layer, respectively.
     step : float, optional
         Increment if cluster number is incorrect.
     n_iter : int, optional
