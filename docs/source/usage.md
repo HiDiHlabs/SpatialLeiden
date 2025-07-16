@@ -147,5 +147,14 @@ print(f"Spatial resolution: {spatial_resolution:.3f}")
 In our case we can compare the resulting clusters to the annotated ground truth regions. If we are not satisfied with the results, we can go back and tweak other parameters such as the underlying neighborhood graphs or the `layer_ratio` to achieve the desired granularity of our results.
 
 ```{code-cell} ipython3
+---
+tags: [hide-cell]
+---
+
+# needed for scanpy v1.11 otherwise plotting fails because the number of clusters changed
+del adata.uns["spatialleiden_colors"]
+```
+
+```{code-cell} ipython3
 sc.pl.embedding(adata, basis="spatial", color=["spatialleiden", "Region"])
 ```
