@@ -10,7 +10,9 @@ Multiplex Leiden
    :nosignatures:
    :toctree: ./generated/
 
+   leiden
    spatialleiden
+   spatialleiden_multimodal
    multiplex_leiden
 
 

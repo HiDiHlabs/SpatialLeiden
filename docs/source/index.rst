@@ -6,7 +6,7 @@ SpatialLeiden is an implementation of
 that can be used to cluster spatially resolved omics data.
 
 SpatialLeiden integrates with the `scverse <https://scverse.org/>`_ by leveraging
-`scanpy <https://scanpy.readthedocs.io/>`_ and `anndata <https://anndata.readthedocs.io/>`_
+`anndata <https://anndata.readthedocs.io/>`_
 but can also be used independently.
 
 Citations

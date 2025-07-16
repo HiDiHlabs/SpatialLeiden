@@ -5,7 +5,7 @@ def distance2connectivity(distances: sparray | spmatrix) -> sparray | spmatrix:
     """
     Transforms distances to connectivites.
 
-    A sparse, pairwise distance matrix is transformed to connectivities by  calculating
+    A sparse distance matrix is transformed to connectivities by calculating
     :math:`1-d/d_{max}`.
 
     Parameters

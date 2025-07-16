@@ -1,6 +1,11 @@
 from importlib.metadata import PackageNotFoundError, version
 
-from ._multiplex_leiden import multiplex_leiden, spatialleiden
+from ._multiplex_leiden import (
+    leiden,
+    multiplex_leiden,
+    spatialleiden,
+    spatialleiden_multimodal,
+)
 from ._resolution_search import (
     search_resolution,
     search_resolution_latent,
@@ -17,8 +22,10 @@ del PackageNotFoundError, version
 
 
 __all__ = [
+    "leiden",
     "multiplex_leiden",
     "spatialleiden",
+    "spatialleiden_multimodal",
     "search_resolution",
     "search_resolution_latent",
     "search_resolution_spatial",

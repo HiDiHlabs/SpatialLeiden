@@ -50,9 +50,9 @@ exclude_patterns: list[str] = []
 intersphinx_mapping = dict(
     anndata=("https://anndata.readthedocs.io/en/stable/", None),
     matplotlib=("https://matplotlib.org/stable/", None),
+    mudata=("https://mudata.readthedocs.io/en/stable/", None),
     numpy=("https://numpy.org/doc/stable/", None),
     python=("https://docs.python.org/3", None),
-    scanpy=("https://scanpy.readthedocs.io/en/stable/", None),
     scipy=("https://docs.scipy.org/doc/scipy/", None),
     squidpy=("https://squidpy.readthedocs.io/en/stable/", None),
 )
