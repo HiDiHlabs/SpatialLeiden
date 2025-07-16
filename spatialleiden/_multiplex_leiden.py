@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 from collections.abc import Collection, Iterable, Mapping
 from types import NoneType
-from typing import Any, Type, TypeAlias, TypeVar
+from typing import TYPE_CHECKING, Any, Type, TypeAlias, TypeVar
 
 import leidenalg as la
 import numpy as np
-from anndata import AnnData
 from igraph import Graph
 from leidenalg.VertexPartition import MutableVertexPartition
-from mudata import MuData
 from numpy.typing import NDArray
 from scipy.sparse import find, sparray, spmatrix
+
+if TYPE_CHECKING:
+    from anndata import AnnData
+    from mudata import MuData
 
 _GraphArray: TypeAlias = sparray | spmatrix | np.ndarray
 

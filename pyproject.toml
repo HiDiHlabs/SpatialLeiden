@@ -16,14 +16,7 @@ authors = [
     { name = "Niklas Müller-Bötticher", email = "niklas.mueller-boetticher@charite.de" },
     { name = "Shashwat Sahay", email = "shashwatsahay.rsg@gmail.com" },
 ]
-dependencies = [
-    "anndata>=0.10",
-    "igraph",
-    "leidenalg~=0.10.2",
-    "mudata~=0.3",
-    "numpy>=1.21",
-    "scipy>=1.9",
-]
+dependencies = ["igraph", "leidenalg~=0.10.2", "numpy>=1.21", "scipy>=1.9"]
 classifiers = [
     "Intended Audience :: Science/Research",
     "Programming Language :: Python",
@@ -39,12 +32,13 @@ docs = [
     "sphinx",
     "sphinx-copybutton",
     "sphinx-rtd-theme",
+    "anndata>=0.10",
     "scanpy",
     "squidpy",
     "dask<2025",         # incompatibility of squidpy with dask >= 2025
     "myst-nb",
 ]
-dev = ["spatialleiden[docs]", "pre-commit"]
+dev = ["spatialleiden[docs]", "mudata~=0.3", "pre-commit"]
 
 [project.urls]
 Homepage      = "https://github.com/HiDiHlabs/SpatialLeiden"

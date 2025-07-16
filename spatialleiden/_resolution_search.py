@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 from collections.abc import Callable
+from typing import TYPE_CHECKING
 from warnings import warn
 
-from anndata import AnnData
-
 from ._multiplex_leiden import leiden, spatialleiden
+
+if TYPE_CHECKING:
+    from anndata import AnnData
 
 
 def _search_resolution(
