@@ -1,6 +1,6 @@
 # SpatialLeiden
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3+](https://img.shields.io/badge/License-GPLv3%2B-blue.svg)](./LICENSE)
 [![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
@@ -69,5 +69,10 @@ This project follows the [SemVer](https://semver.org/) guidelines for versioning
 
 ## License
 
-This project is licensed under the MIT License - for details please refer to the
-[LICENSE](./LICENSE) file.
+Copyright (C) 2025 N. Müller-Bötticher, S. Sahay, N. Ishaque, R. Eils, HiDiHlabs
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
