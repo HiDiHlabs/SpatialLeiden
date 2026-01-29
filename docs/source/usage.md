@@ -23,12 +23,17 @@ tags: [hide-cell]
 ---
 
 from tempfile import NamedTemporaryFile
-from urllib.request import urlretrieve
 
 import anndata as ad
+import requests
+
+BASE_URL = "https://api.figshare.com/v2"
 
 with NamedTemporaryFile(suffix=".h5ad") as h5ad_file:
-    urlretrieve("https://figshare.com/ndownloader/files/40038538", h5ad_file.name)
+    h5ad_file.write(
+        requests.get(f"{BASE_URL}/file/download/40038538").content
+    )
+
     adata = ad.read_h5ad(h5ad_file)
 
 
