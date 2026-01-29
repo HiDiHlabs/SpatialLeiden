@@ -5,6 +5,7 @@ repos:
     rev: v6.0.0
     hooks:
       - id: check-added-large-files
+        args: ['--maxkb=1000']
       - id: check-case-conflict
       - id: check-toml
       - id: check-yaml
@@ -29,5 +30,6 @@ repos:
     rev: v2.4.1
     hooks:
       - id: codespell
+        exclude_types: ["jupyter"]
         additional_dependencies:
           - tomli

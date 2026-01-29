@@ -43,18 +43,19 @@ nitpicky = True
 nitpick_ignore = [("py:class", "optional")]
 
 # MyST-NB config
-nb_execution_timeout = 3 * 60
+nb_execution_mode = "off"
+myst_enable_extensions = ["dollarmath"]
 
 exclude_patterns: list[str] = []
 
 intersphinx_mapping = dict(
-    anndata=("https://anndata.readthedocs.io/en/stable/", None),
+    anndata=("https://anndata.readthedocs.io/page/", None),
     matplotlib=("https://matplotlib.org/stable/", None),
-    mudata=("https://mudata.readthedocs.io/en/stable/", None),
+    mudata=("https://mudata.readthedocs.io/page/", None),
     numpy=("https://numpy.org/doc/stable/", None),
     python=("https://docs.python.org/3", None),
     scipy=("https://docs.scipy.org/doc/scipy/", None),
-    squidpy=("https://squidpy.readthedocs.io/en/stable/", None),
+    squidpy=("https://squidpy.readthedocs.io/page/", None),
 )
 
 # -- Options for HTML output -------------------------------------------------

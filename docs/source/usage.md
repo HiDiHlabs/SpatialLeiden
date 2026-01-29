@@ -9,6 +9,9 @@ jupytext:
     format_name: myst
     format_version: 0.13
     jupytext_version: 1.16.2
+mystnb:
+  execution_mode: auto
+  execution_timeout: 180
 ---
 
 # Usage
@@ -69,6 +72,7 @@ sc.pp.pca(adata, random_state=random_state)
 sc.pp.neighbors(adata, random_state=random_state)
 ```
 
+(sec-spatialgraph)=
 ### Building spatial neighbor graphs
 
 For SpatialLeiden we need an additional graph representing the neighbors in space i.e.
