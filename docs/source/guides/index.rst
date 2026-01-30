@@ -9,5 +9,6 @@ to e.g., cluster multiple samples jointly.
    :maxdepth: 1
    :caption: Contents:
 
+   multisample 
    3D
    multimodal
