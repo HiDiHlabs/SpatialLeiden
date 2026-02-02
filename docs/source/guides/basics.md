@@ -9,9 +9,12 @@ jupytext:
     format_name: myst
     format_version: 0.13
     jupytext_version: 1.16.2
+mystnb:
+  execution_mode: auto
+  execution_timeout: 180
 ---
 
-# Usage
+# Basic Usage of SpatialLeiden
 
 +++
 
@@ -23,12 +26,17 @@ tags: [hide-cell]
 ---
 
 from tempfile import NamedTemporaryFile
-from urllib.request import urlretrieve
 
 import anndata as ad
+import requests
+
+BASE_URL = "https://api.figshare.com/v2"
 
 with NamedTemporaryFile(suffix=".h5ad") as h5ad_file:
-    urlretrieve("https://figshare.com/ndownloader/files/40038538", h5ad_file.name)
+    h5ad_file.write(
+        requests.get(f"{BASE_URL}/file/download/40038538").content
+    )
+
     adata = ad.read_h5ad(h5ad_file)
 
 
@@ -64,6 +72,7 @@ sc.pp.pca(adata, random_state=random_state)
 sc.pp.neighbors(adata, random_state=random_state)
 ```
 
+(sec-spatialgraph)=
 ### Building spatial neighbor graphs
 
 For SpatialLeiden we need an additional graph representing the neighbors in space i.e.

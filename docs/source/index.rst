@@ -26,6 +26,7 @@ SpatialLeiden: spatially aware Leiden clustering.
    self
    installation
    usage
+   guides/index
    api
 
 

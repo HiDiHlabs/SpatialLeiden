@@ -5,5 +5,3 @@ __pycache__
 # Sphinx
 generated
 jupyter_execute
-
-*.ipynb

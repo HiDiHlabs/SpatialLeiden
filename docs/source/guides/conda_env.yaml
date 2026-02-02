@@ -1,0 +1,17 @@
+name: vignette
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - ipykernel
+  - spatialleiden=0.4
+  - celluloid
+  - scanpy=1.10.4
+  - harmonypy=0.2
+  - squidpy=1.7.0
+  - mudata
+  - colorcet
+  - seaborn
+  - scikit-misc
+  - ipywidgets
+  - plotly
