@@ -14,7 +14,7 @@ mystnb:
   execution_timeout: 180
 ---
 
-# Usage
+# Basic Usage of SpatialLeiden
 
 +++
 
