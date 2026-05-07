@@ -35,7 +35,8 @@ docs = [
     "anndata>=0.10",
     "scanpy",
     "squidpy",
-    "dask<2025",         # incompatibility of squidpy with dask >= 2025
+    "spatialdata>=0.7.2", # due to https://github.com/scverse/spatialdata/issues/1065
+    "dask<2025",          # incompatibility of squidpy with dask >= 2025
     "myst-nb",
 ]
 dev = ["spatialleiden[docs]", "mudata~=0.3", "pre-commit"]
