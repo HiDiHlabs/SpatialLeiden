@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Collection, Iterable, Mapping
 from types import NoneType
-from typing import TYPE_CHECKING, Any, Type, TypeAlias, TypeVar
+from typing import TYPE_CHECKING, Any, TypeAlias, TypeVar
 
 import leidenalg as la
 import numpy as np
@@ -34,7 +34,7 @@ def multiplex_leiden(
     directed: bool | Collection[bool] = True,
     use_weights: bool | Collection[bool] = True,
     n_iterations: int = -1,
-    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
+    partition_type: type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_weights: float | Collection[float] = 1,
     partition_kwargs: dict | None | Collection[dict | None] = None,
     random_state: int = 42,
@@ -121,7 +121,7 @@ def leiden(
     directed: bool = True,
     use_weights: bool = True,
     n_iterations: int = -1,
-    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
+    partition_type: type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     neighbors_key: str = "connectivities",
     random_state: int = 42,
     **partition_kwargs,
@@ -187,7 +187,7 @@ def spatialleiden(
     directed: bool | tuple[bool, bool] = True,
     use_weights: bool | tuple[bool, bool] = True,
     n_iterations: int = -1,
-    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
+    partition_type: type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_ratio: float = 1,
     latent_neighbors_key: str = "connectivities",
     spatial_neighbors_key: str = "spatial_connectivities",
@@ -284,7 +284,7 @@ def spatialleiden_multimodal(
     directed: bool | Mapping[str, bool] = True,
     use_weights: bool | Mapping[str, bool] = True,
     n_iterations: int = -1,
-    partition_type: Type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
+    partition_type: type[MutableVertexPartition] = la.RBConfigurationVertexPartition,
     layer_weights: float | Mapping[str, float] = 1,
     neighbors_key: str | Mapping[str, str] = "connectivities",
     spatial_neighbors_key: str = "spatial_connectivities",
