@@ -22,12 +22,12 @@ del PackageNotFoundError, version
 
 
 __all__ = [
+    "distance2connectivity",
     "leiden",
     "multiplex_leiden",
-    "spatialleiden",
-    "spatialleiden_multimodal",
     "search_resolution",
     "search_resolution_latent",
     "search_resolution_spatial",
-    "distance2connectivity",
+    "spatialleiden",
+    "spatialleiden_multimodal",
 ]
